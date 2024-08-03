@@ -17,3 +17,6 @@ you should see something like this:
 
 
 How to build, will be soon...
+
+
+Original owner of the Terminal: https://rationalstudios.org/ 
