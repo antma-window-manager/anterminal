@@ -19,7 +19,7 @@ make
 
 After building, you should be able to install the binary and run it like every other program
 
-````sh
+```sh
 sudo install -Dvm755 ./anterminal /bin/anterminal
 anterminal
 ```
