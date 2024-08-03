@@ -1,22 +1,36 @@
-# anterminal is a Customized Open-Source Terminal, the original terminal is names RationalTerm
+# Anterminal
 
+Anterminal is a customized Open-Source terminal based on the `RationalTerm` terminal.
 
+## How to build
 
-***How to build***
+First go ahead and clone the repository.
 
-
-First off, Lets cd into the anterminal file and copy this command inside your terminal !
-```lua 
-gcc -O2 -Wall $(pkg-config --cflags vte-2.91) main.c -o anterminal $(pkg-config --libs vte-2.91)
-
-./anterminal
+```sh
+git clone https://github.com/fdiskzlez/anterminal.git anterminal
 ```
-you should see something like this: 
+
+Then cd inside and type `make` to build a binary!
+
+```sh
+cd anterminal
+make
+```
+
+After building, you should be able to install the binary and run it like every other program
+
+````sh
+sudo install -Dvm755 ./anterminal /bin/anterminal
+anterminal
+```
+
+> [!TIP]
+> To clean the object files and the binary from the source tree, you may've to run `make clean`
+
+## Screenshots
 
 ![2024-08-03_17-24](https://github.com/user-attachments/assets/cdb3ae81-6693-411f-8b46-41f18d681526)
 
+## Thanks to
 
-How to build, will be soon...
-
-
-Original owner of the Terminal: https://rationalstudios.org/ 
+- [RationalTerm](https://rationalstudios.org/): Which is the original terminal used here.
