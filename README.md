@@ -4,20 +4,31 @@ Anterminal is a customized Open-Source terminal based on the `RationalTerm` term
 
 ## How to build
 
-First go ahead and clone the repository.
+To build anterminal you will need some dependencies, so first install these packages in your system
+
+> [!WARNING]
+> This command may have to be changed depending on your actual linux distro
+
+For an ubuntu-based system you could try using this
+
+```sh
+sudo apt install libvte-2.91-dev
+```
+
+Then go ahead and clone the repository.
 
 ```sh
 git clone https://github.com/fdiskzlez/anterminal.git anterminal
 ```
 
-Then cd inside and type `make` to build a binary!
+So now, you can go inside the source tree and type `make` to build a binary!
 
 ```sh
 cd anterminal
 make
 ```
 
-After building, you should be able to install the binary and run it like every other program
+After building, you would have to be able to install the binary and run it like every other program
 
 ```sh
 sudo install -Dvm755 ./anterminal /bin/anterminal
