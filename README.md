@@ -48,7 +48,7 @@ anterminal
 
 For customizing, all you need is to edit the config.h file, and rebuild anterminal!
 ### config.h
-- Opacity
+- Opacity \n
 	To change the opacity of the terminal, you just change the opacity variable to a number between 0.1 and 1.0
 	
 - Colorscheme
