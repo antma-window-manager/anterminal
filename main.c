@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     gtk_init(&argc, &argv);
     terminal = vte_terminal_new();
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "");
+    gtk_window_set_title(GTK_WINDOW(window), "anterminal");
     gtk_window_set_default_size(GTK_WINDOW(window), 700, 600);
 
     GdkScreen *screen = gtk_widget_get_screen(window);
