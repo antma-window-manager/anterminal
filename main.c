@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 
     gtk_widget_set_opacity(GTK_WIDGET(window), opacity);
 
-    gchar *command[] = {"/bin/sh", "-c", "PS1='anterminal > ' /bin/sh", NULL};
+    gchar *command[] = {"/bin/sh", "-c", "$SHELL", NULL};
 
     vte_terminal_spawn_async(VTE_TERMINAL(terminal),
     VTE_PTY_DEFAULT,
@@ -85,7 +85,6 @@ int main(int argc, char *argv[])
     g_signal_connect(window, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
     g_signal_connect(terminal, "child-exited", G_CALLBACK(gtk_main_quit), NULL);
     g_signal_connect(window, "key-press-event", G_CALLBACK(on_key_press), NULL);
-    set_terminal_text_color(VTE_TERMINAL(terminal), "#b722dd");
 
     vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start(GTK_BOX(vbox), terminal, TRUE, TRUE, 0);
