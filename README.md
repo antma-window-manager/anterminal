@@ -48,19 +48,20 @@ anterminal
 
 For customizing, all you need is to edit the config.h file, and rebuild anterminal!
 ### config.h
-- Opacity \n
-	To change the opacity of the terminal, you just change the opacity variable to a number between 0.1 and 1.0
+#### Opacity 
+To change the opacity of the terminal, you just change the opacity variable to a number between 0.1 and 1.0
 	
-- Colorscheme
-	To change the colorschemes, you need to change the variable's that start with CLR_
+#### Colorscheme
+To change the colorschemes, you need to change the variable's that start with CLR_
 	
-- Font
-	To change the font, you need the font variable to {FONT_NAME} {FONT_SIZE}
+#### Font
+To change the font, you need the font variable to {FONT_NAME} {FONT_SIZE}
 	
-	for example:
+for example:
 	
-	```c
-	#define FONT "Terminess Nerd Font 12"
+```c
+#define FONT "Terminess Nerd Font 12"
+```
 
 ### Rebuilding
 To rebuild the thing, u need to first clean the folder with
