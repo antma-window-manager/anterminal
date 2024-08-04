@@ -61,7 +61,6 @@ For customizing, all you need is to edit the config.h file, and rebuild antermin
 	
 	```c
 	#define FONT "Terminess Nerd Font 12"
-        ```
 
 ### Rebuilding
 To rebuild the thing, u need to first clean the folder with
