@@ -9,24 +9,26 @@ double opacity = 0.8;
 
 // Colors
 #define BLACK "#000000"
-#define RED "#b21818"
-#define GREEN "#18b218"
-#define YELLOW "#b26818"
-#define BLUE "#1818b2"
-#define MAGENTA "#b218b2"
-#define CYAN "#18b2b2"
-#define WHITE "#b2b2b2"
-#define LIGHT_BLACK "#686868"
-#define LIGHT_RED "#ff5454"
-#define LIGHT_GREEN "#54ff54"
-#define LIGHT_YELLOW "#ffff54"
-#define LIGHT_BLUE "#5454ff"
-#define LIGHT_MAGENTA "#ff54ff"
-#define LIGHT_CYAN "#54ffff"
+#define RED "#cd0000"
+#define GREEN "#00cd00"
+#define YELLOW "#cdcd00"
+#define BLUE "#0000ee"
+#define MAGENTA "#cd00cd"
+#define CYAN "#00cdcd"
+#define WHITE "#e5e5e5"
+#define LIGHT_BLACK "#7f7f7f"
+#define LIGHT_RED "#ff0000"
+#define LIGHT_GREEN "#00ff00"
+#define LIGHT_YELLOW "#ffff00"
+#define LIGHT_BLUE "#5c5cff"
+#define LIGHT_MAGENTA "#ff00ff"
+#define LIGHT_CYAN "#00ffff"
 #define LIGHT_WHITE "#ffffff"
 
-// Font {font name} {font size}
-#define FONT "monospace 12"
+// Font name
+#define FONT "monospace"
+// Font size 
+#define FONT_SIZE 12
 
 // Cursor shape {BLOCK, BEAM, UNDERLINE}
 char *CURSOR_SHAPE = "BLOCK";

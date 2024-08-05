@@ -55,13 +55,15 @@ To change the opacity of the terminal, you just change the opacity variable to a
 To change the colorschemes, you need to change the variable's that start with CLR_
 
 #### Font
-To change the font, you need the font variable to {FONT_NAME} {FONT_SIZE}
+To change the font, you need the set the FONT variable to the font name
 
 for example:
 
 ```c
-#define FONT "Terminess Nerd Font 12"
+#define FONT "Terminess Nerd Font"
 ```
+
+to change the size of the font, change the FONT_SIZE
 
 #### Cursor shape
 To change the cursor shape, change the CURSOR_SHAPE variable to BLOCK, BEAM or UNDERLINE
@@ -87,6 +89,7 @@ and then install it with
 ```sh
 sudo install -Dvm755 ./anterminal /bin/anterminal
 ```
+
 ## Screenshots
 
 ![2024-08-03_17-24](https://github.com/user-attachments/assets/cdb3ae81-6693-411f-8b46-41f18d681526)
