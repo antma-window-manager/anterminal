@@ -12,6 +12,8 @@ GtkWidget *window;
 static gboolean
 on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data)
 {
+    VteTerminal *terminal = VTE_TERMINAL(user_data);
+
     if ((event->state & GDK_MOD1_MASK) && event->keyval == GDK_KEY_Up) {
         opacity += OPACITY_STEP;
         if (opacity > MAX_OPACITY) opacity = MAX_OPACITY;
@@ -21,6 +23,12 @@ on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data)
         opacity -= OPACITY_STEP;
         if (opacity < MIN_OPACITY) opacity = MIN_OPACITY;
         gtk_widget_set_opacity(window, opacity);
+        return TRUE;
+    } else if ((event->state & GDK_CONTROL_MASK) && (event->state & GDK_SHIFT_MASK) && event->keyval == GDK_KEY_C) {
+        vte_terminal_copy_clipboard_format(terminal, VTE_FORMAT_TEXT);
+        return TRUE;
+    } else if ((event->state & GDK_CONTROL_MASK) && (event->state & GDK_SHIFT_MASK) && event->keyval == GDK_KEY_V) {
+        vte_terminal_paste_clipboard(terminal);
         return TRUE;
     }
 
@@ -45,41 +53,41 @@ void set_terminal_text_color(VteTerminal *terminal, const char *color)
 static const GdkRGBA
 sec_parse_color(const char *format)
 {
-	GdkRGBA color;
-	if (!gdk_rgba_parse(&color, format)) {
-		g_warning("Unable to parse color: %s", format);
-		exit(EXIT_FAILURE);
-	}
+    GdkRGBA color;
+    if (!gdk_rgba_parse(&color, format)) {
+        g_warning("Unable to parse color: %s", format);
+        exit(EXIT_FAILURE);
+    }
 
-	return (const GdkRGBA) color;
+    return (const GdkRGBA) color;
 }
 
 static void
 set_terminal_palette(VteTerminal *self)
 {
-	const GdkRGBA bg_color = sec_parse_color(CLR_BACKGROUND);
-	const GdkRGBA fg_color = sec_parse_color(CLR_FOREGROUND);
+    const GdkRGBA bg_color = sec_parse_color(CLR_BACKGROUND);
+    const GdkRGBA fg_color = sec_parse_color(CLR_FOREGROUND);
 
-	const GdkRGBA palette[] = {
-		sec_parse_color(CLR_BLACK),
-		sec_parse_color(CLR_RED),
-		sec_parse_color(CLR_GREEN),
-		sec_parse_color(CLR_YELLOW),
-		sec_parse_color(CLR_BLUE),
-		sec_parse_color(CLR_MAGENTA),
-		sec_parse_color(CLR_CYAN),
-		sec_parse_color(CLR_WHITE),
-		sec_parse_color(CLR_LIGHT_BLACK),
-		sec_parse_color(CLR_LIGHT_RED),
-		sec_parse_color(CLR_LIGHT_GREEN),
-		sec_parse_color(CLR_LIGHT_YELLOW),
-		sec_parse_color(CLR_LIGHT_BLUE),
-		sec_parse_color(CLR_LIGHT_MAGENTA),
-		sec_parse_color(CLR_LIGHT_CYAN),
-		sec_parse_color(CLR_LIGHT_WHITE)
-	};
+    const GdkRGBA palette[] = {
+        sec_parse_color(CLR_BLACK),
+        sec_parse_color(CLR_RED),
+        sec_parse_color(CLR_GREEN),
+        sec_parse_color(CLR_YELLOW),
+        sec_parse_color(CLR_BLUE),
+        sec_parse_color(CLR_MAGENTA),
+        sec_parse_color(CLR_CYAN),
+        sec_parse_color(CLR_WHITE),
+        sec_parse_color(CLR_LIGHT_BLACK),
+        sec_parse_color(CLR_LIGHT_RED),
+        sec_parse_color(CLR_LIGHT_GREEN),
+        sec_parse_color(CLR_LIGHT_YELLOW),
+        sec_parse_color(CLR_LIGHT_BLUE),
+        sec_parse_color(CLR_LIGHT_MAGENTA),
+        sec_parse_color(CLR_LIGHT_CYAN),
+        sec_parse_color(CLR_LIGHT_WHITE)
+    };
 
-	vte_terminal_set_colors(self, &fg_color, &bg_color, palette, 16);
+    vte_terminal_set_colors(self, &fg_color, &bg_color, palette, 16);
 }
 
 static void
@@ -126,7 +134,7 @@ int main(int argc, char *argv[])
 
     g_signal_connect(window, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
     g_signal_connect(terminal, "child-exited", G_CALLBACK(gtk_main_quit), NULL);
-    g_signal_connect(window, "key-press-event", G_CALLBACK(on_key_press), NULL);
+    g_signal_connect(window, "key-press-event", G_CALLBACK(on_key_press), terminal);
     // set_terminal_text_color(VTE_TERMINAL(terminal), "#ffffff");
     set_terminal_palette(VTE_TERMINAL(terminal));
     vte_terminal_set_font(VTE_TERMINAL(terminal), pango_font_description_from_string(FONT));
