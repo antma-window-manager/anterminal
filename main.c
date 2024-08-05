@@ -28,8 +28,17 @@ on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data)
     } else if ((event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) && event->keyval == GDK_KEY_C) {
         vte_terminal_copy_clipboard_format(VTE_TERMINAL(widget), VTE_FORMAT_TEXT);
         return TRUE;
-    } else if ((event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) && event->keyval == GDK_KEY_V) {
+    } else if ((event->state & (GDK_CONTROL_MASK)) && event->keyval == GDK_KEY_V) {
         vte_terminal_paste_clipboard(VTE_TERMINAL(widget));
+        return TRUE;
+    } else if ((event->state & (GDK_MOD1_MASK)) && event->keyval == GDK_KEY_minus) {
+        vte_terminal_set_font_scale(VTE_TERMINAL(widget), vte_terminal_get_font_scale(VTE_TERMINAL(widget))-0.05);
+        return TRUE;
+    } else if ((event->state & (GDK_MOD1_MASK)) && event->keyval == GDK_KEY_equal) {
+        vte_terminal_set_font_scale(VTE_TERMINAL(widget), vte_terminal_get_font_scale(VTE_TERMINAL(widget))+0.05);
+        return TRUE;
+    } else if ((event->state & (GDK_MOD1_MASK)) && event->keyval == GDK_KEY_0) {
+        vte_terminal_set_font_scale(VTE_TERMINAL(widget), 1); 
         return TRUE;
     }
 
@@ -65,7 +74,7 @@ set_terminal_palette(VteTerminal *self)
         sec_parse_color(BLUE),
         sec_parse_color(MAGENTA),
         sec_parse_color(CYAN),
-        sec_parse_color(WHITE),
+        sec_parse_color(WHITE),   
         sec_parse_color(LIGHT_BLACK),
         sec_parse_color(LIGHT_RED),
         sec_parse_color(LIGHT_GREEN),
@@ -73,8 +82,8 @@ set_terminal_palette(VteTerminal *self)
         sec_parse_color(LIGHT_BLUE),
         sec_parse_color(LIGHT_MAGENTA),
         sec_parse_color(LIGHT_CYAN),
-        sec_parse_color(LIGHT_WHITE)
-    };
+        sec_parse_color(LIGHT_WHITE),
+};
 
     vte_terminal_set_colors(self, &fg_color, &bg_color, palette, 16);
 }
@@ -123,7 +132,16 @@ int main(int argc, char *argv[])
     g_signal_connect(terminal, "key-press-event", G_CALLBACK(on_key_press), NULL);
 
     set_terminal_palette(VTE_TERMINAL(terminal));
-    vte_terminal_set_font(VTE_TERMINAL(terminal), pango_font_description_from_string(FONT));
+
+    // initialise the font
+    PangoFontDescription *font;
+    font = pango_font_description_new();
+    
+    // font settings 
+    pango_font_description_set_size(font, FONT_SIZE * PANGO_SCALE);
+    pango_font_description_set_family(font, FONT);
+    
+    vte_terminal_set_font(VTE_TERMINAL(terminal), font);
     
     if (strcmp(CURSOR_SHAPE, "BLOCK") == 0)
         vte_terminal_set_cursor_shape(VTE_TERMINAL(terminal), VTE_CURSOR_SHAPE_BLOCK);
