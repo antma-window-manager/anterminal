@@ -1,4 +1,3 @@
-//#include <complex.h>
 #include <vte/vte.h>
 #include <gtk/gtk.h>
 #include <string.h>
@@ -24,66 +23,55 @@ on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data)
         if (opacity < MIN_OPACITY) opacity = MIN_OPACITY;
         gtk_widget_set_opacity(window, opacity);
         return TRUE;
+    } else if ((event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) && event->keyval == GDK_KEY_C) {
+        vte_terminal_copy_clipboard_format(VTE_TERMINAL(widget), VTE_FORMAT_TEXT);
+        return TRUE;
+    } else if ((event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) && event->keyval == GDK_KEY_V) {
+        vte_terminal_paste_clipboard(VTE_TERMINAL(widget));
+        return TRUE;
     }
 
     return FALSE;
 }
 
-/*
-void set_terminal_text_color(VteTerminal *terminal, const char *color)
-{
-    GdkRGBA fg_color;
-    if (gdk_rgba_parse(&fg_color, color)) {
-        vte_terminal_set_colors(terminal,
-        &fg_color,     // Foreground color
-        NULL,          // Background color (use default)
-        NULL,          // Palette
-        0              // Number of palette colors
-        );
-    } else {
-        g_warning("Failed to parse color: %s", color);
-    }
-}
-*/
-
 static const GdkRGBA
 sec_parse_color(const char *format)
 {
-	GdkRGBA color;
-	if (!gdk_rgba_parse(&color, format)) {
-		g_warning("Unable to parse color: %s :(", format);
-		exit(EXIT_FAILURE);
-	}
+    GdkRGBA color;
+    if (!gdk_rgba_parse(&color, format)) {
+        g_warning("Unable to parse color: %s :(", format);
+        exit(EXIT_FAILURE);
+    }
 
-	return (const GdkRGBA) color;
+    return color;
 }
 
 static void
 set_terminal_palette(VteTerminal *self)
 {
-	const GdkRGBA bg_color = sec_parse_color(BACKGROUND);
-	const GdkRGBA fg_color = sec_parse_color(FOREGROUND);
+    const GdkRGBA bg_color = sec_parse_color(BACKGROUND);
+    const GdkRGBA fg_color = sec_parse_color(FOREGROUND);
 
-	const GdkRGBA palette[] = {
-		sec_parse_color(BLACK),
-		sec_parse_color(RED),
-		sec_parse_color(GREEN),
-		sec_parse_color(YELLOW),
-		sec_parse_color(BLUE),
-		sec_parse_color(MAGENTA),
-		sec_parse_color(CYAN),
-		sec_parse_color(WHITE),
-		sec_parse_color(LIGHT_BLACK),
-		sec_parse_color(LIGHT_RED),
-		sec_parse_color(LIGHT_GREEN),
-		sec_parse_color(LIGHT_YELLOW),
-		sec_parse_color(LIGHT_BLUE),
-		sec_parse_color(LIGHT_MAGENTA),
-		sec_parse_color(LIGHT_CYAN),
-		sec_parse_color(LIGHT_WHITE)
-	};
+    const GdkRGBA palette[] = {
+        sec_parse_color(BLACK),
+        sec_parse_color(RED),
+        sec_parse_color(GREEN),
+        sec_parse_color(YELLOW),
+        sec_parse_color(BLUE),
+        sec_parse_color(MAGENTA),
+        sec_parse_color(CYAN),
+        sec_parse_color(WHITE),
+        sec_parse_color(LIGHT_BLACK),
+        sec_parse_color(LIGHT_RED),
+        sec_parse_color(LIGHT_GREEN),
+        sec_parse_color(LIGHT_YELLOW),
+        sec_parse_color(LIGHT_BLUE),
+        sec_parse_color(LIGHT_MAGENTA),
+        sec_parse_color(LIGHT_CYAN),
+        sec_parse_color(LIGHT_WHITE)
+    };
 
-	vte_terminal_set_colors(self, &fg_color, &bg_color, palette, 16);
+    vte_terminal_set_colors(self, &fg_color, &bg_color, palette, 16);
 }
 
 static void
@@ -113,7 +101,6 @@ int main(int argc, char *argv[])
     gtk_widget_set_opacity(GTK_WIDGET(window), opacity);
 
     gchar *command[] = {"/bin/sh", "-c", "$SHELL", NULL};
-    // gchar *command[] = {"/bin/sh", "-c", "PS1='anterminal > ' /bin/sh", NULL};
 
     vte_terminal_spawn_async(VTE_TERMINAL(terminal),
     VTE_PTY_DEFAULT,
@@ -130,19 +117,15 @@ int main(int argc, char *argv[])
 
     g_signal_connect(window, "delete-event", G_CALLBACK(gtk_main_quit), NULL);
     g_signal_connect(terminal, "child-exited", G_CALLBACK(gtk_main_quit), NULL);
-    g_signal_connect(window, "key-press-event", G_CALLBACK(on_key_press), NULL);
-    // set_terminal_text_color(VTE_TERMINAL(terminal), "#ffffff");
+    g_signal_connect(terminal, "key-press-event", G_CALLBACK(on_key_press), NULL);
+
     set_terminal_palette(VTE_TERMINAL(terminal));
     vte_terminal_set_font(VTE_TERMINAL(terminal), pango_font_description_from_string(FONT));
     
-    // im sorry that im using that much if's, i don't know how to do it any other wau (T~T)
-
     if (strcmp(CURSOR_SHAPE, "BLOCK") == 0)
         vte_terminal_set_cursor_shape(VTE_TERMINAL(terminal), VTE_CURSOR_SHAPE_BLOCK);
-
     else if (strcmp(CURSOR_SHAPE, "BEAM") == 0)
         vte_terminal_set_cursor_shape(VTE_TERMINAL(terminal), VTE_CURSOR_SHAPE_IBEAM);
-
     else if (strcmp(CURSOR_SHAPE, "UNDERLINE") == 0)
         vte_terminal_set_cursor_shape(VTE_TERMINAL(terminal), VTE_CURSOR_SHAPE_UNDERLINE);
     else {
