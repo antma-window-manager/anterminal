@@ -1,29 +1,35 @@
 // Opacity level
-double opacity = 1.0;
+double opacity = 0.8;
 
 // Background 
-#define CLR_BACKGROUND "#000000"
+#define BACKGROUND "#000000"
 
 // Foreground 
-#define CLR_FOREGROUND "#ffffff"
+#define FOREGROUND "#ffffff"
 
 // Colors
-#define CLR_BLACK "#000000"
-#define CLR_RED "#b21818"
-#define CLR_GREEN "#18b218"
-#define CLR_YELLOW "#b26818"
-#define CLR_BLUE "#1818b2"
-#define CLR_MAGENTA "#b218b2"
-#define CLR_CYAN "#18b2b2"
-#define CLR_WHITE "#b2b2b2"
-#define CLR_LIGHT_BLACK "#686868"
-#define CLR_LIGHT_RED "#ff5454"
-#define CLR_LIGHT_GREEN "#54ff54"
-#define CLR_LIGHT_YELLOW "#ffff54"
-#define CLR_LIGHT_BLUE "#5454ff"
-#define CLR_LIGHT_MAGENTA "#ff54ff"
-#define CLR_LIGHT_CYAN "#54ffff"
-#define CLR_LIGHT_WHITE "#ffffff"
+#define BLACK "#000000"
+#define RED "#b21818"
+#define GREEN "#18b218"
+#define YELLOW "#b26818"
+#define BLUE "#1818b2"
+#define MAGENTA "#b218b2"
+#define CYAN "#18b2b2"
+#define WHITE "#b2b2b2"
+#define LIGHT_BLACK "#686868"
+#define LIGHT_RED "#ff5454"
+#define LIGHT_GREEN "#54ff54"
+#define LIGHT_YELLOW "#ffff54"
+#define LIGHT_BLUE "#5454ff"
+#define LIGHT_MAGENTA "#ff54ff"
+#define LIGHT_CYAN "#54ffff"
+#define LIGHT_WHITE "#ffffff"
 
 // Font {font name} {font size}
 #define FONT "monospace 12"
+
+// Cursor shape {BLOCK, BEAM, UNDERLINE}
+char *CURSOR_SHAPE = "BLOCK";
+
+// Cursor blinking {TRUE / FALSE}
+#define CURSOR_BLINKING TRUE

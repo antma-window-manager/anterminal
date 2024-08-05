@@ -1,5 +1,7 @@
+//#include <complex.h>
 #include <vte/vte.h>
 #include <gtk/gtk.h>
+#include <string.h>
 
 #include "config.h"
 
@@ -27,6 +29,7 @@ on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data)
     return FALSE;
 }
 
+/*
 void set_terminal_text_color(VteTerminal *terminal, const char *color)
 {
     GdkRGBA fg_color;
@@ -41,13 +44,14 @@ void set_terminal_text_color(VteTerminal *terminal, const char *color)
         g_warning("Failed to parse color: %s", color);
     }
 }
+*/
 
 static const GdkRGBA
 sec_parse_color(const char *format)
 {
 	GdkRGBA color;
 	if (!gdk_rgba_parse(&color, format)) {
-		g_warning("Unable to parse color: %s", format);
+		g_warning("Unable to parse color: %s :(", format);
 		exit(EXIT_FAILURE);
 	}
 
@@ -57,26 +61,26 @@ sec_parse_color(const char *format)
 static void
 set_terminal_palette(VteTerminal *self)
 {
-	const GdkRGBA bg_color = sec_parse_color(CLR_BACKGROUND);
-	const GdkRGBA fg_color = sec_parse_color(CLR_FOREGROUND);
+	const GdkRGBA bg_color = sec_parse_color(BACKGROUND);
+	const GdkRGBA fg_color = sec_parse_color(FOREGROUND);
 
 	const GdkRGBA palette[] = {
-		sec_parse_color(CLR_BLACK),
-		sec_parse_color(CLR_RED),
-		sec_parse_color(CLR_GREEN),
-		sec_parse_color(CLR_YELLOW),
-		sec_parse_color(CLR_BLUE),
-		sec_parse_color(CLR_MAGENTA),
-		sec_parse_color(CLR_CYAN),
-		sec_parse_color(CLR_WHITE),
-		sec_parse_color(CLR_LIGHT_BLACK),
-		sec_parse_color(CLR_LIGHT_RED),
-		sec_parse_color(CLR_LIGHT_GREEN),
-		sec_parse_color(CLR_LIGHT_YELLOW),
-		sec_parse_color(CLR_LIGHT_BLUE),
-		sec_parse_color(CLR_LIGHT_MAGENTA),
-		sec_parse_color(CLR_LIGHT_CYAN),
-		sec_parse_color(CLR_LIGHT_WHITE)
+		sec_parse_color(BLACK),
+		sec_parse_color(RED),
+		sec_parse_color(GREEN),
+		sec_parse_color(YELLOW),
+		sec_parse_color(BLUE),
+		sec_parse_color(MAGENTA),
+		sec_parse_color(CYAN),
+		sec_parse_color(WHITE),
+		sec_parse_color(LIGHT_BLACK),
+		sec_parse_color(LIGHT_RED),
+		sec_parse_color(LIGHT_GREEN),
+		sec_parse_color(LIGHT_YELLOW),
+		sec_parse_color(LIGHT_BLUE),
+		sec_parse_color(LIGHT_MAGENTA),
+		sec_parse_color(LIGHT_CYAN),
+		sec_parse_color(LIGHT_WHITE)
 	};
 
 	vte_terminal_set_colors(self, &fg_color, &bg_color, palette, 16);
@@ -130,6 +134,30 @@ int main(int argc, char *argv[])
     // set_terminal_text_color(VTE_TERMINAL(terminal), "#ffffff");
     set_terminal_palette(VTE_TERMINAL(terminal));
     vte_terminal_set_font(VTE_TERMINAL(terminal), pango_font_description_from_string(FONT));
+    
+    // im sorry that im using that much if's, i don't know how to do it any other wau (T~T)
+
+    if (strcmp(CURSOR_SHAPE, "BLOCK") == 0)
+        vte_terminal_set_cursor_shape(VTE_TERMINAL(terminal), VTE_CURSOR_SHAPE_BLOCK);
+
+    else if (strcmp(CURSOR_SHAPE, "BEAM") == 0)
+        vte_terminal_set_cursor_shape(VTE_TERMINAL(terminal), VTE_CURSOR_SHAPE_IBEAM);
+
+    else if (strcmp(CURSOR_SHAPE, "UNDERLINE") == 0)
+        vte_terminal_set_cursor_shape(VTE_TERMINAL(terminal), VTE_CURSOR_SHAPE_UNDERLINE);
+    else {
+        g_warning("Unable to parse cursor shape: %s :(", CURSOR_SHAPE);
+        vte_terminal_set_cursor_shape(VTE_TERMINAL(terminal), VTE_CURSOR_SHAPE_BLOCK);
+    }
+
+    if (CURSOR_BLINKING == TRUE)
+        vte_terminal_set_cursor_blink_mode(VTE_TERMINAL(terminal), VTE_CURSOR_BLINK_ON);
+    else if (CURSOR_BLINKING == FALSE)
+        vte_terminal_set_cursor_blink_mode(VTE_TERMINAL(terminal), VTE_CURSOR_BLINK_OFF);
+    else {
+        g_warning("Unable to parse blink mode :(");
+        vte_terminal_set_cursor_blink_mode(VTE_TERMINAL(terminal), VTE_CURSOR_BLINK_ON);
+    }
 
     vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start(GTK_BOX(vbox), terminal, TRUE, TRUE, 0);

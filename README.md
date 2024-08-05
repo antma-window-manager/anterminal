@@ -48,21 +48,26 @@ anterminal
 
 For customizing, all you need is to edit the config.h file, and rebuild anterminal!
 ### config.h
-#### Opacity 
+- Opacity
 To change the opacity of the terminal, you just change the opacity variable to a number between 0.1 and 1.0
-	
-#### Colorscheme
+
+- Colorscheme
 To change the colorschemes, you need to change the variable's that start with CLR_
-	
-#### Font
+
+- Font
 To change the font, you need the font variable to {FONT_NAME} {FONT_SIZE}
-	
+
 for example:
-	
+
 ```c
 #define FONT "Terminess Nerd Font 12"
 ```
 
+- Cursor shape
+To change the cursor shape, change the CURSOR_SHAPE variable to BLOCK, BEAM or UNDERLINE
+
+- Blinking cursor 
+To make the cursor not blink, change the CURSOR_BLINKING variable to FALSE, and to make it blink, change it to TRUE
 ### Rebuilding
 To rebuild the thing, u need to first clean the folder with
 
@@ -84,6 +89,7 @@ sudo install -Dvm755 ./anterminal /bin/anterminal
 ## Screenshots
 
 ![2024-08-03_17-24](https://github.com/user-attachments/assets/cdb3ae81-6693-411f-8b46-41f18d681526)
+![2024-08-05 02-17](https://i.imgur.com/po3TSox.png)
 
 ## Thanks to
 
