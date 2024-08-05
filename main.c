@@ -28,7 +28,7 @@ on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data)
     } else if ((event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) && event->keyval == GDK_KEY_C) {
         vte_terminal_copy_clipboard_format(VTE_TERMINAL(widget), VTE_FORMAT_TEXT);
         return TRUE;
-    } else if ((event->state & (GDK_CONTROL_MASK)) && event->keyval == GDK_KEY_V) {
+    } else if ((event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) && event->keyval == GDK_KEY_V) {
         vte_terminal_paste_clipboard(VTE_TERMINAL(widget));
         return TRUE;
     } else if ((event->state & (GDK_MOD1_MASK)) && event->keyval == GDK_KEY_minus) {
