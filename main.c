@@ -10,18 +10,20 @@
 
 GtkWidget *window;
 
+static void set_terminal_palette(VteTerminal *self);
+
 static gboolean
 on_key_press(GtkWidget *widget, GdkEventKey *event, gpointer user_data)
 {
     if ((event->state & GDK_MOD1_MASK) && event->keyval == GDK_KEY_Up) {
         opacity += OPACITY_STEP;
         if (opacity > MAX_OPACITY) opacity = MAX_OPACITY;
-        gtk_widget_set_opacity(window, opacity);
+        set_terminal_palette(VTE_TERMINAL(widget));  // Update terminal colors with new opacity
         return TRUE;
     } else if ((event->state & GDK_MOD1_MASK) && event->keyval == GDK_KEY_Down) {
         opacity -= OPACITY_STEP;
         if (opacity < MIN_OPACITY) opacity = MIN_OPACITY;
-        gtk_widget_set_opacity(window, opacity);
+        set_terminal_palette(VTE_TERMINAL(widget));  // Update terminal colors with new opacity
         return TRUE;
     } else if ((event->state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) && event->keyval == GDK_KEY_C) {
         vte_terminal_copy_clipboard_format(VTE_TERMINAL(widget), VTE_FORMAT_TEXT);
@@ -49,8 +51,11 @@ sec_parse_color(const char *format)
 static void
 set_terminal_palette(VteTerminal *self)
 {
-    const GdkRGBA bg_color = sec_parse_color(BACKGROUND);
+    GdkRGBA bg_color = sec_parse_color(BACKGROUND);
     const GdkRGBA fg_color = sec_parse_color(FOREGROUND);
+
+    // Set the background opacity
+    bg_color.alpha = opacity;
 
     const GdkRGBA palette[] = {
         sec_parse_color(BLACK),
@@ -97,8 +102,6 @@ int main(int argc, char *argv[])
     {
         gtk_widget_set_visual(window, visual);
     }
-
-    gtk_widget_set_opacity(GTK_WIDGET(window), opacity);
 
     gchar *command[] = {"/bin/sh", "-c", "$SHELL", NULL};
 
