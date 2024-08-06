@@ -12,13 +12,13 @@ To build anterminal you will need some dependencies, so first install these pack
 For an ubuntu-based system you could try using this
 
 ```sh
-sudo apt install libvte-2.91-dev
+sudo apt install libvte-2.91-dev libconfig-dev
 ```
 
 and for arch-based
 
 ```sh 
-sudo pacman -S vte3
+sudo pacman -S vte3 libconfig
 ```
 
 Then go ahead and clone the repository.
@@ -37,7 +37,7 @@ make
 After building, you would have to be able to install the binary and run it like every other program
 
 ```sh
-sudo install -Dvm755 ./anterminal /bin/anterminal
+sudo install -Dvm755 ./anterminal /usr/local/bin/anterminal
 anterminal
 ```
 
