@@ -9,7 +9,7 @@ BINNAME = anterminal
 all: $(BINNAME)
 
 $(BINNAME): $(OBJS)
-	$(CC) -o $@ $(OBJS) $(LDFLAGS)
+	$(CC) -o $@ $(OBJS) $(LDFLAGS) -lconfig
 
 %.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)

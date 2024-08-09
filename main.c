@@ -97,6 +97,7 @@ child_ready(VteTerminal *terminal, GPid pid, GError *error, gpointer user_data)
 
 int main(int argc, char *argv[])
 {
+    initconfig();
     GtkWidget *terminal, *vbox;
 
     gtk_init(&argc, &argv);

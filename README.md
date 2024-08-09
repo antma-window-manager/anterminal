@@ -12,13 +12,13 @@ To build anterminal you will need some dependencies, so first install these pack
 For an ubuntu-based system you could try using this
 
 ```sh
-sudo apt install libvte-2.91-dev
+sudo apt install libvte-2.91-dev libconfig-dev
 ```
 
 and for arch-based
 
 ```sh 
-sudo pacman -S vte3
+sudo pacman -S vte3 libconfig
 ```
 
 Then go ahead and clone the repository.
@@ -37,7 +37,7 @@ make
 After building, you would have to be able to install the binary and run it like every other program
 
 ```sh
-sudo install -Dvm755 ./anterminal /bin/anterminal
+sudo install -Dvm755 ./anterminal /usr/local/bin/anterminal
 anterminal
 ```
 
@@ -46,32 +46,39 @@ anterminal
 
 ## Customizing
 
-For customizing, all you need is to edit the config.h file, and rebuild anterminal!
-### config.h
-#### Opacity
-To change the opacity of the terminal, you just change the opacity variable to a number between 0.1 and 1.0
+For customization, I (NameGoesThere) worked my ass off for 3 hours getting .conf support working. So here is how you do it. <br>
+Go into your .config folder (~/.config), then make a file named anterminal.conf <br>
+Once you have opened anterminal.conf with something like vim or nano, ther are a lot of things you are able to change.
 
-#### Colorscheme
-To change the colorschemes, you need to change the variable's that start with CLR_
+### Example conf
+```
+OPACITY = 0.8;
 
-#### Font
-To change the font, you need the set the FONT variable to the font name
+BACKGROUND = "#000000";
+FOREGROUND = "#ffffff";
 
-for example:
+BLACK = "#000000";
+RED = "#cd0000";
+GREEN = "#00cd00";
+YELLOW = "#cdcd00";
+BLUE = "#0000ee";
+MAGENTA = "#cd00cd";
+CYAN = "#00cdcd";
+WHITE = "#e5e5e5";
+LIGHT_BLACK = "#7f7f7f";
+LIGHT_RED = "#ff0000";
+LIGHT_GREEN = "#00ff00";
+LIGHT_YELLOW = "#ffff00";
+LIGHT_BLUE = "#5c5cff";
+LIGHT_MAGENTA = "#ff00ff";
+LIGHT_CYAN = "#00ffff";
+LIGHT_WHITE = "#ffffff";
 
-```c
-#define FONT "Terminess Nerd Font"
+FONT = "monospace";
+FONT_SIZE = 12;
 ```
 
-to change the size of the font, change the FONT_SIZE
-
-#### Cursor shape
-To change the cursor shape, change the CURSOR_SHAPE variable to BLOCK, BEAM or UNDERLINE
-
-#### Blinking cursor 
-To make the cursor not blink, change the CURSOR_BLINKING variable to FALSE, and to make it blink, change it to TRUE
-
-### Rebuilding
+## Rebuilding
 To rebuild the thing, u need to first clean the folder with
 
 ```sh
@@ -87,7 +94,7 @@ make
 and then install it with
 
 ```sh
-sudo install -Dvm755 ./anterminal /bin/anterminal
+sudo install -Dvm755 ./anterminal /usr/local/bin/anterminal
 ```
 
 ## Screenshots
