@@ -51,6 +51,32 @@ Go into your .config folder (~/.config), then make a file named anterminal.conf 
 Once you have opened anterminal.conf with something like vim or nano, ther are a lot of things you are able to change.
 
 ### Example conf
+```
+OPACITY = 0.8;
+
+BACKGROUND = "#000000";
+FOREGROUND = "#ffffff";
+
+BLACK = "#000000";
+RED = "#cd0000";
+GREEN = "#00cd00";
+YELLOW = "#cdcd00";
+BLUE = "#0000ee";
+MAGENTA = "#cd00cd";
+CYAN = "#00cdcd";
+WHITE = "#e5e5e5";
+LIGHT_BLACK = "#7f7f7f";
+LIGHT_RED = "#ff0000";
+LIGHT_GREEN = "#00ff00";
+LIGHT_YELLOW = "#ffff00";
+LIGHT_BLUE = "#5c5cff";
+LIGHT_MAGENTA = "#ff00ff";
+LIGHT_CYAN = "#00ffff";
+LIGHT_WHITE = "#ffffff";
+
+FONT = "monospace";
+FONT_SIZE = 12;
+```
 
 ## Rebuilding
 To rebuild the thing, u need to first clean the folder with
