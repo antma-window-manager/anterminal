@@ -4,4 +4,4 @@ Name=Anterminal
 Comment=Terminal Emulator
 Exec=anterminal
 Icon=anterminal
-Categories=System;Utility
+Categories=System;Utility;TerminalEmulator
