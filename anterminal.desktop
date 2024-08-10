@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=Anterminal
-Comment=Flash card based learning tool
+Comment=Terminal Emulator
 Exec=anterminal
 Icon=anterminal
 Categories=System;Utility
