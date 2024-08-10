@@ -27,18 +27,12 @@ Then go ahead and clone the repository.
 git clone https://github.com/fdiskzlez/anterminal.git anterminal
 ```
 
-So now, you can go inside the source tree and type `make` to build a binary!
+So now, you can go inside the source tree and type `./install.sh` to build and install anterminal!
 
 ```sh
 cd anterminal
-make 
-```
-
-After building, you would have to be able to install the binary and run it like every other program
-
-```sh
-sudo install -Dvm755 ./anterminal /usr/local/bin/anterminal
-anterminal
+chmod +x install.sh
+./install.sh
 ```
 
 > [!TIP]
