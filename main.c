@@ -133,6 +133,7 @@ int main(int argc, char *argv[])
     g_signal_connect(terminal, "key-press-event", G_CALLBACK(on_key_press), NULL);
 
     set_terminal_palette(VTE_TERMINAL(terminal));
+    vte_terminal_set_bold_is_bright(VTE_TERMINAL(terminal), TRUE);
 
     // initialise the font
     PangoFontDescription *font;
