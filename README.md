@@ -61,6 +61,18 @@ make clean
 make PREFIX=$HOME/rootfs install
 ```
 
+Which results in something like this:
+
+```
+$ tree ~/rootfs
+/home/user/rootfs
+├── bin
+│  └── anterminal
+└── share
+   └── applications
+      └── anterminal.desktop
+```
+
 And to uninstall from that ~/rootfs folder
 
 ```sh
