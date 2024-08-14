@@ -128,7 +128,7 @@ and then properly build it with
 make
 ```
 
-and then install it with using the `install` target again
+and then install it using the `install` target again
 
 ```sh
 sudo make install
