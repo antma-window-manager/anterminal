@@ -1,3 +1,5 @@
+PREFIX := /usr/local
+
 SRCS = $(wildcard *.c)
 OBJS = $(SRCS:.c=.o)
 
@@ -10,9 +12,21 @@ all: $(BINNAME)
 
 $(BINNAME): $(OBJS)
 	$(CC) -o $@ $(OBJS) $(LDFLAGS) -lconfig
+	rm $(OBJS)
 
 %.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-clean: $(OBJS) $(BINNAME)
-	rm $(OBJS) $(BINNAME)
+install: $(BINNAME)
+	mkdir -p $(PREFIX) $(PREFIX)/bin $(PREFIX)/share/applications
+	install -Dvm755 ./$(BINNAME) $(PREFIX)/bin/$(BINNAME)
+	install -Dvm755 ./$(BINNAME).desktop $(PREFIX)/share/applications/$(BINNAME).desktop
+
+$(PREFIX)/bin/$(BINNAME): install
+
+uninstall: $(PREFIX)/bin/$(BINNAME)
+	rm $(PREFIX)/bin/$(BINNAME)
+	rm $(PREFIX)/share/applications/$(BINNAME).desktop
+
+clean: ./$(BINNAME)
+	rm $(BINNAME)
