@@ -27,22 +27,51 @@ Then go ahead and clone the repository.
 git clone https://github.com/fdiskzlez/anterminal.git anterminal
 ```
 
-So now, you can go inside the source tree and type `./install.sh` to build and install anterminal!
+So now, you can go inside the source tree and type `sudo make install` to build and install
+anterminal!
 
 ```sh
 cd anterminal
-chmod +x install.sh
-./install.sh
+sudo make install
 ```
 
-> [!TIP]
-> To clean the object files and the binary from the source tree, you may've to run `make clean`
+> [!NOTE]
+> By default anterminal will use the installation prefix `/usr/local` so you'll get
+> `/usr/local/bin/anterminal` and `/usr/local/share/applications/anterminal.desktop`.
+
+## Tips
+
+### Cleaning the source tree
+
+You can use:
+
+```sh
+sudo make clean
+```
+
+### Specifying an installation prefix
+
+You can install anterminal in a specified prefix instead, so per example, you can do
+something like this which is useful when, per example, packaging anterminal.
+
+```
+mkdir -pv ~/rootfs
+sudo make clean
+make clean
+make PREFIX=$HOME/rootfs install
+```
+
+And to uninstall from that ~/rootfs folder
+
+```sh
+make PREFIX=$HOME/rootfs uninstall
+```
 
 ## Customizing
 
 For customization, I (NameGoesThere) worked my ass off for 3 hours getting .conf support working. So here is how you do it. <br>
 Go into your .config folder (~/.config), then make a file named anterminal.conf <br>
-Once you have opened anterminal.conf with something like vim or nano, ther are a lot of things you are able to change.
+Once you have opened anterminal.conf with something like vim or nano, there are a lot of things you are able to change.
 
 ### Example conf
 ```
@@ -79,16 +108,18 @@ To rebuild the thing, u need to first clean the folder with
 make clean
 ```
 
+> Note that you may require to use sudo if you installed with `sudo make install`
+
 and then properly build it with
 
 ```sh
 make
 ```
 
-and then install it with
+and then install it with using the `install` target again
 
 ```sh
-sudo install -Dvm755 ./anterminal /usr/local/bin/anterminal
+sudo make install
 ```
 
 ## Screenshots
