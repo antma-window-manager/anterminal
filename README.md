@@ -1,6 +1,6 @@
 # Anterminal
 
-Anterminal is a customized Open-Source terminal based on the `RationalTerm` terminal.
+Terminal emulator. Nothing too fancy.
 
 ## How to build
 
@@ -9,7 +9,7 @@ To build anterminal you will need some dependencies, so first install these pack
 > [!WARNING]
 > This command may have to be changed depending on your actual linux distro
 
-For an ubuntu-based system you could try using this
+For a debian-based system you could try using this
 
 ```sh
 sudo apt install libvte-2.91-dev libconfig-dev
@@ -24,7 +24,7 @@ sudo pacman -S vte3 libconfig
 Then go ahead and clone the repository.
 
 ```sh
-git clone https://github.com/fdiskzlez/anterminal.git anterminal
+git clone https://github.com/antma-window-manager/anterminal.git anterminal
 ```
 
 So now, you can go inside the source tree and type `sudo make install` to build and install
