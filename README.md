@@ -138,7 +138,3 @@ sudo make install
 
 ![2024-08-03_17-24](https://github.com/user-attachments/assets/cdb3ae81-6693-411f-8b46-41f18d681526)
 ![2024-08-05 02-17](https://i.imgur.com/po3TSox.png)
-
-## Thanks to
-
-- [RationalTerm](https://rationalstudios.org/): Which is the original terminal used here.
