@@ -1,10 +1,9 @@
-PREFIX := /usr/local
-
 SRCS = $(wildcard *.c)
 OBJS = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Werror $(shell pkg-config --cflags vte-2.91)
-LDFLAGS = $(shell pkg-config --libs vte-2.91)
+# Include flags for GTK+ 3 and VTE
+CFLAGS = -Wall -Werror $(shell pkg-config --cflags vte-2.91) -I/opt/homebrew/include
+LDFLAGS = $(shell pkg-config --libs vte-2.91) -L/opt/homebrew/lib -lconfig
 
 BINNAME = anterminal
 
@@ -17,16 +16,6 @@ $(BINNAME): $(OBJS)
 %.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-install: $(BINNAME)
-	mkdir -p $(PREFIX) $(PREFIX)/bin $(PREFIX)/share/applications
-	install -Dvm755 ./$(BINNAME) $(PREFIX)/bin/$(BINNAME)
-	install -Dvm755 ./$(BINNAME).desktop $(PREFIX)/share/applications/$(BINNAME).desktop
+clean:
+	rm $(BINNAME) $(OBJS)
 
-$(PREFIX)/bin/$(BINNAME): install
-
-uninstall: $(PREFIX)/bin/$(BINNAME)
-	rm $(PREFIX)/bin/$(BINNAME)
-	rm $(PREFIX)/share/applications/$(BINNAME).desktop
-
-clean: ./$(BINNAME)
-	rm $(BINNAME)
