@@ -162,9 +162,4 @@ void initconfig()
 
         config_lookup_int(&cfg, "FONT_SIZE", &FONT_SIZE);
     }
-    else
-        printf("Config file not found, using defaults.\n");
-    
-    free(CONFIGFILEPATH);
-    config_destroy(&cfg);
 }

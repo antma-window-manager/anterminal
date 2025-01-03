@@ -1,3 +1,8 @@
 anterminal
 *.o
 .vscode
+fuckssake.py
+.DS_Store
+conf.conf
+anterminal.app
+*.png

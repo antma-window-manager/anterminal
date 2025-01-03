@@ -83,7 +83,7 @@ set_terminal_palette(VteTerminal *self)
         sec_parse_color(LIGHT_MAGENTA),
         sec_parse_color(LIGHT_CYAN),
         sec_parse_color(LIGHT_WHITE),
-};
+    };
 
     vte_terminal_set_colors(self, &fg_color, &bg_color, palette, 16);
 }
@@ -105,6 +105,9 @@ int main(int argc, char *argv[])
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "anterminal");
     gtk_window_set_default_size(GTK_WINDOW(window), 700, 600);
+
+    // Set the window borderless for both Linux and macOS
+    gtk_window_set_decorated(GTK_WINDOW(window), FALSE);
 
     GdkScreen *screen = gtk_widget_get_screen(window);
     GdkVisual *visual = gdk_screen_get_rgba_visual(screen);
@@ -164,7 +167,7 @@ int main(int argc, char *argv[])
         g_warning("Unable to parse blink mode :(");
         vte_terminal_set_cursor_blink_mode(VTE_TERMINAL(terminal), VTE_CURSOR_BLINK_ON);
     }
-
+    
     vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start(GTK_BOX(vbox), terminal, TRUE, TRUE, 0);
 
